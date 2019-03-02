@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&subset=cyrillic");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,500,700&subset=cyrillic");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=cyrillic");
+a.no-text-link:visited, a.no-text-link:hover {
+  color: inherit;
+  text-decoration: unset; }
+a.no-text-link:hover {
+  background-color: red;
+  text-transform: unset; }
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fafafa; }
+  html a:visited, html a:hover, body a:visited, body a:hover {
+    color: #28a745;
+    background-color: transparent !important; }
+  html a::-moz-focus-inner, html select::-moz-focus-inner, body a::-moz-focus-inner, body select::-moz-focus-inner {
+    border: 0; }
+  html select, html a, body select, body a {
+    outline: none; }
+  html a, body a {
+    color: #28a745; }
+
+body {
+  overflow-y: scroll; }
+
+@media (max-width: 1200px) {
+  .container {
+    width: 100%;
+    max-width: 100%; } }
+
+/*# sourceMappingURL=app.css.map */

@@ -1,0 +1,13 @@
+import app from '~/store/app'
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+const store = () => new Vuex.Store({
+  modules: {
+    app
+  }
+})
+
+export default store

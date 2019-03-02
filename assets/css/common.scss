@@ -1,0 +1,10 @@
+a.no-text-link {
+  &:visited, &:hover {
+    color: inherit;
+    text-decoration: unset;
+  }
+  &:hover {
+    background-color: red;
+    text-transform: unset;
+  }
+}

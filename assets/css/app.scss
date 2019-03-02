@@ -1,0 +1,33 @@
+@import "fonts";
+@import "constants";
+@import "common";
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  background-color: $background-color;
+  a:visited, a:hover {
+    color: #28a745;
+    background-color: transparent !important;
+  }
+  a::-moz-focus-inner, select::-moz-focus-inner {
+    border: 0;
+  }
+
+  select, a {
+    outline: none;
+  }
+  a {
+    color: #28a745;
+  }
+}
+
+body {
+  overflow-y: scroll;
+}
+
+.container {
+  @media (max-width: $displaySizeLarge) {
+    width: 100%;
+    max-width: 100%;
+  }
+}
