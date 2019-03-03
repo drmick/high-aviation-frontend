@@ -4,11 +4,10 @@ import createPersistedState from 'vuex-persistedstate'
 
 export default ({ store, req, isDev }) => {
   createPersistedState({
-    key: 'data',
+    key: 'sitedata',
     reducer: state => ({
-      filter: state.filter,
-      service: state.service,
-      app: state.app
+      app: state.app,
+      flight: state.flight
     }),
     storage: {
       getItem: (key) => process.client ? Cookies.getJSON(key) : cookie.parse(req.headers.cookie || '')[key],

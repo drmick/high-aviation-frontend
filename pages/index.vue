@@ -1,67 +1,126 @@
 <template lang="pug">
-  section.container
-    <!--div-->
-      <!--p Enter Flight ID:-->
-    <!--div-->
-      <!--input(v-model="inputText")-->
-    <!--div-->
-      <!--button(@click="loadStatus") Get flight detail-->
-    <!--div.result-->
-      <!--| {{result}}-->
+  .sections
+    section.sections__section-1
+      p.main HIGH AVIATION CLUB
+      p.descr предлагает вам прилетать и улетать из аэропорта «Домодедово» с  максимальным комфортом и удобством
+    //section.sections__section-2
+      ul
+        li(:style="{ backgroundImage: 'url(/images/pic1.png)' }")
+          p.main Персональное здание аэровокзала Домодедово
+        li(:style="{ backgroundImage: 'url(/images/pic2.png)' }")
+          p.main Упрощенное прохождение таможенного оформления
+        li(:style="{ backgroundImage: 'url(/images/pic3.png)' }")
+          p.main Персональный автомобиль до самолета
+    section.sections__section-3
+      p.main Введите номер вашего рейса,
+      p.descr {{$t('home.section-3.descr')}}
+    section.sections__section-4
+      .sections__section-4__input
+        vue-bootstrap-typeahead(v-model="searchString", :data="flightList", placeholder="№ рейса", ref="typeahead")
+      .sections__section-4__button
+        button-item(:to="'/search/?flight=' + searchString", :disabled="searchString.length < 1") искать
 </template>
 
 <script>
 import axios from 'axios'
+import ButtonItem from '../components/buttonItem'
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
 export default {
-  data: function () {
+  head () {
     return {
-      inputText: '',
-      result: ''
+      title: 'Главная'
     }
   },
-  components: {
+  data: function () {
+    return {
+      searchString: '',
+      flight: null,
+      flightList: []
+    }
   },
-  asyncData (context) {
-  },
-  created () {
-  },
-  methods: {
-    loadStatus: function () {
-      let uri = 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/' + this.inputText
+  components: { ButtonItem, VueBootstrapTypeahead },
+  watch: {
+    searchString: function (newVal) {
+      newVal = newVal.split(' ').join('')
+      if (newVal.length <= 1) return
+      this.$refs.typeahead.inputValue = newVal
       let that = this
-      axios.get(uri, {
-        params: {
-          appId: '5bf6ab55',
-          appKey: 'af8dcc69453fdafb6eb13e5ad2933522'
-        }
-      })
+      let uri = 'http://localhost:4000/filter/' + newVal
+      axios.get(uri, {})
         .then(function (response) {
-          that.result = response
+          let data = response.data
+          that.flightList = data.map((it) => {
+            if (it.flight && it.flight.iataNumber) {
+              return it.flight.iataNumber
+            }
+          })
         })
         .catch(function (error) {
-          that.result = error
-        })
-        .then(function () {
-          that.result = '{}'
+          console.error(error)
+          that.flightList = []
         })
     }
   }
 }
 </script>
-<style>
-  .container {
-    padding: 30px;
-    min-height: 100vh;
-    align-items: center;
-    text-align: center;
-  }
+<style lang="scss" scoped>
+  .sections {
+    section {
+      text-align: center;
+      margin-bottom: 15px;
 
-  .container > div {
-    margin-bottom: 15px;
-  }
+      p {
+        color: #919bb4;
+        font-size: 14px;
 
-  .container > div > button {
-    margin-left: 15px;
+        &.main {
+          line-height: 1.6em;
+          font-weight: 600;
+          color: white;
+        }
+
+        &.descr {
+          padding: 0 15px;
+        }
+
+        margin-bottom: 0;
+      }
+    }
+
+    &__section-2 {
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+          background-size: cover;
+          padding: 0 30px;
+          border-radius: 3px;
+          height: 90px;
+          line-height: 1em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    &__section-4 {
+      &__input {
+        margin-bottom: 6px;
+      }
+
+      &__button {
+        height: 38px;
+
+        .btn-wrapper {
+          border-radius: 3px;
+          font-size: 16px;
+          padding-bottom: 2px;
+        }
+      }
+    }
   }
 </style>

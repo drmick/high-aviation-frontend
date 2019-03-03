@@ -4,11 +4,14 @@
 
 html, body {
   font-family: 'Roboto', sans-serif;
-  background-color: $background-color;
+  background-color: $background-color !important;
+  min-height: 100%;
+
   a:visited, a:hover {
     color: #28a745;
     background-color: transparent !important;
   }
+
   a::-moz-focus-inner, select::-moz-focus-inner {
     border: 0;
   }
@@ -16,13 +19,14 @@ html, body {
   select, a {
     outline: none;
   }
+
   a {
     color: #28a745;
   }
-}
 
-body {
-  overflow-y: scroll;
+  p {
+    color: white;
+  }
 }
 
 .container {

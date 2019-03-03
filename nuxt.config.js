@@ -22,25 +22,19 @@ module.exports = {
     ]
   },
   plugins: [
-    'plugins/api-client',
+    { src: 'plugins/vuex-persist.js' },
+    // 'plugins/api-client',
     'plugins/bootstrap',
-    'plugins/i18n',
-    'plugins/moment',
-    { src: 'plugins/modal', ssr: false },
-    { src: 'plugins/notifications', ssr: false },
-    {
-      src: 'plugins/clipboard',
-      ssr: false
-    },
-    {
-      src: 'plugins/countdown',
-      ssr: false
-    },
-    { src: 'plugins/vuex-persist.js' }
+    'plugins/i18n'
+    // 'plugins/moment',
+    // { src: 'plugins/notifications', ssr: false },
+    // {
+    //   src: 'plugins/clipboard',
+    //   ssr: false
+    // }
   ],
   env: {
-    serviceKey: 'CnM7oGgfqs7hzWVUAghdZr8CcgdEpbZY2SE2jVUoVgo',
-    baseUrl: 'https://bittobe.com'
+    baseUrl: 'https://highaviation.ru'
   },
 
   /*
@@ -58,8 +52,18 @@ module.exports = {
     // extractCSS: {
     //   allChunks: true
     // },
-    extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
+    // extend (config, { isDev, isClient }) {
+    //   if (isDev && isClient) {
+    //     config.module.rules.push({
+    //       enforce: 'pre',
+    //       test: /\.(js|vue)$/,
+    //       loader: 'eslint-loader',
+    //       exclude: /(node_modules)/
+    //     })
+    //   }
+    // }
+    extend (config, { isDev }) {
+      if (isDev && process.client) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,

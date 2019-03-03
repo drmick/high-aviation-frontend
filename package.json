@@ -10,7 +10,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "^1.1.0",
@@ -31,7 +32,8 @@
     "vue-yandex-metrika": "^1.7.2",
     "vuex-persistedstate": "^2.5.4",
     "vuex-persist": "^2.0.0",
-    "vue-cookie": "^1.1.4"
+    "vue-cookie": "^1.1.4",
+    "vue-bootstrap-typeahead": "^0.2.6"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

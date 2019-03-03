@@ -1,13 +1,13 @@
 <template lang="pug">
   div#main
     #top(ref="top")
-      //navbar(v-model="sidebarEnabled")
+      navbar(v-model="sidebarEnabled")
     .container#main-container(:style="mainContainerStyle")
       // sidebar(:hiddenInMobile="!sidebarEnabled")
       #main-block
         #main-block-content
           //breadcrumbs
-          //nuxt
+          nuxt
     //the-bet-modal
     //no-ssr
       notifications(group="simple-notification", position="bottom right")
@@ -15,7 +15,7 @@
 
 <script>
 import Navbar from '~/components/layouts/navbar'
-import Sidebar from '~/components/layouts/sidebar'
+// import Sidebar from '~/components/layouts/sidebar'
 
 export default {
   name: 'Viewport',
@@ -30,9 +30,9 @@ export default {
         { name: 'og:locale', content: this.$i18n.locale },
         { name: 'og:type', content: 'article' },
         { name: 'og:description', content: this.$t('description') },
-        { name: 'og:site_name', content: this.$t('siteName') },
-        { name: 'og:url', content: process.env.baseUrl + this.$route.fullPath },
-        { name: 'og:image', content: process.env.baseUrl + '/logo_180.png' }
+        { name: 'og:site_name', content: this.$t('siteName') }
+        // { name: 'og:url', content: process.env.baseUrl + this.$route.fullPath },
+        // { name: 'og:image', content: process.env.baseUrl + '/logo_180.png' }
       ]
     }
   },
@@ -56,7 +56,7 @@ export default {
   },
   components: {
     'navbar': Navbar,
-    'sidebar': Sidebar
+    // 'sidebar': Sidebar
   },
   methods: {
     handleResize: function () {
@@ -77,6 +77,9 @@ export default {
 
   #main {
     background-color: $background-color;
+    color: white;
+    font-family: "Open Sans", sans-serif;
+    min-height: 100vh;
   }
 
   #top {
@@ -86,10 +89,10 @@ export default {
   }
 
   #main-container {
-    padding-top: 150px;
+    padding-top: 50px;
     position: relative;
     @media (max-width: $displaySizeSmall) {
-      padding: 130px 5px 5px;
+      padding: 10px 10px 10px;
     }
   }
 
@@ -100,6 +103,7 @@ export default {
     @media (max-width: $displaySizeSmall) {
       padding-left: 0;
     }
+
     #main-block-content {
       overflow-x: hidden;
       width: 100%;
