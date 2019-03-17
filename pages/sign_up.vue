@@ -2,7 +2,7 @@
   .walls
     .wall
       .wall__content
-        .wall__content__title ВОЙТИ
+        .wall__content__title РЕГИСТРАЦИЯ
         b-form
           b-form-group(label="Email" label-for="email", class="label")
             b-form-input(
@@ -22,8 +22,16 @@
             v-validate="'required'"
             placeholder="Введите пароль")
             span.error {{ errors.first('password') }}
-        multi-lang-router-link.forgot-password(to="#") Забыли пароль?
-        a.button(@click="submit") войти
+          b-form-group(label="Пароль" label-for="password_confirmation")
+            b-form-input(
+            :class="{ 'is-invalid': errors.has('password_confirmation') }"
+            name="password_confirmation"
+            type="password"
+            v-model="user.password"
+            v-validate="'required'"
+            placeholder="Повторите пароль")
+            span.error {{ errors.first('password_confirmation') }}
+        a.button(@click="submit") зарегистрироваться
     .wall
       .wall__content
         .wall__content__title ВОЙТИ С ПОМОЩЬЮ СОЦСЕТЕЙ
@@ -49,24 +57,19 @@ export default {
   methods: {
     submit: function () {
       this.$validator.validateAll().then((result) => {
-        if (result) this.auth()
+        if (result) this.register()
       }).catch((e) => {
         console.error(e)
       })
     },
-    auth: function () {
-      this.$auth.loginWith('local', {
-        data: {
-          user: {
-            email: this.user.email,
-            password: this.user.password
-          }
-        }
-      }).catch(e => {
-        this.error = e + ''
-      }).then((result) => {
-        console.log('res', result)
-      })
+    register: function () {
+      this.$axios.post('users', { user: this.user })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
     }
   }
 }

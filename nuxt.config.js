@@ -1,8 +1,7 @@
+const environment = {
+  API_URL: 'http://localhost:4000/api/v1/'
+}
 module.exports = {
-  /*
-  ** Headers of the page
-  */
-
   head: {
     meta: [
       { charset: 'utf-8' },
@@ -23,9 +22,10 @@ module.exports = {
   },
   plugins: [
     { src: 'plugins/vuex-persist.js' },
-    // 'plugins/api-client',
     'plugins/bootstrap',
-    'plugins/i18n'
+    'plugins/i18n',
+    'plugins/vee-validate',
+    { src: '~/plugins/autocomplete', ssr: false }
     // 'plugins/moment',
     // { src: 'plugins/notifications', ssr: false },
     // {
@@ -36,18 +36,49 @@ module.exports = {
   env: {
     baseUrl: 'https://highaviation.ru'
   },
-
-  /*
-  ** Customize the progress bar color
-  */
   router: {
     middleware: ['i18n']
   },
-
   loading: '~/components/loading.vue',
-  /*
-  ** Build configuration
-  */
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
+  ],
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/users/sign_in', propertyName: 'token' },
+          logout: { url: '/users/sign_out', method: 'delete' },
+          user: { url: '/users/current' }
+        }
+      },
+      tokenRequired: true,
+      tokenType: 'Bearer'
+    },
+    // redirect: {
+    //   login: '/sign_in',
+    //   logout: '/',
+    //   callback: '/sign_in',
+    //   home: '/'
+    // }
+  },
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: environment.API_URL
+    // credentials: true,
+    // proxy: false,
+    // debug: true,
+    // retry: {
+    //   retries: 3
+    // },
+    // requestInterceptor: (config, { store }) => {
+    //   config.headers.common['Authorization'] = ''
+    //   config.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;application/json'
+    //   return config
+    // }
+  },
+
   build: {
     // extractCSS: {
     //   allChunks: true

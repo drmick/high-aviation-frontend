@@ -11,6 +11,8 @@
             .flight__info__detail
               .flight__info__detail__title Вылет
               .flight__info__detail__airport {{flight.departure.iataCode}}
+              .flight__info__detail__airport__detail {{flight.departure.airportInfo.nameAirport}}, {{flight.departure.airportInfo.nameCountry}}
+
               .flight__info__detail__date {{ dateFormat(flight.departure.scheduledTime)  }}
               .flight__info__detail__time {{ timeFormat(flight.departure.scheduledTime)  }}
           .flight__icon
@@ -19,6 +21,7 @@
             .flight__info__detail
               .flight__info__detail__title Прилет
               .flight__info__detail__airport {{flight.arrival.iataCode}}
+              .flight__info__detail__airport__detail {{flight.arrival.airportInfo.nameAirport}}, {{flight.arrival.airportInfo.nameCountry}}
               .flight__info__detail__date {{ dateFormat(flight.arrival.scheduledTime)  }}
               .flight__info__detail__time {{ timeFormat(flight.arrival.scheduledTime)  }}
       .wall
@@ -28,43 +31,21 @@
             .flight-common__airlines__name {{ flight.airline.name }}
           .flight-common__time
             .flight-common__airlines__title Время в пути
-            .flight-common__airlines__name {{ betweenDates(flight.arrival.scheduledTime, flight.departure.scheduledTime) }}
+            .flight-common__airlines__name {{ betweenDates(flight.arrival.scheduledTime, flight.departure.scheduledTime, flight.arrival.airportInfo.GMT, flight.departure.airportInfo.GMT) }}
       .wall.yellow.register
         b-nav(tabs)
           b-nav-item(active) Частное лицо
-        b-form
-          b-form-group(label="Имя" label-for="userFirstName")
-            b-form-input(
-            id="userFirstName"
-            type="text"
-            v-model="user.first_name"
-            required
-            placeholder="Введите имя")
-          b-form-group(label="Фамилия" label-for="userLastName")
-            b-form-input(
-            id="userLastName"
-            type="text"
-            v-model="user.last_name"
-            required
-            placeholder="Введите фамилию")
-          b-form-group(
-          id="exampleInputGroup1"
-          label="Email address:"
-          label-for="exampleInput1")
-            b-form-input(
-            id="exampleInput1"
-            type="email"
-            v-model="user.email"
-            required
-            placeholder="Enter email")
+        fizik(:data="fizik")
 
 </template>
 
 <script>
-import axios from 'axios'
+import Fizik from '../components/fizik'
 import moment from 'moment'
+import axios from '../.nuxt/axios'
 
 export default {
+  components: { Fizik },
   head () {
     return {
       title: 'Бронирование'
@@ -76,14 +57,16 @@ export default {
       flight: null,
       user: {
         email: ''
-      }
+      },
+      fizik: {}
     }
   },
   async asyncData (params) {
+    // console.log(context.app.params)
     let flightNumber = params.query.flight
-    let uri = 'http://localhost:4000/flight/' + flightNumber
+    let uri = 'flight/' + flightNumber
     let flight = null
-    await axios.get(uri, {})
+    await params.$axios.get(uri, {})
       .then(function (response) {
         flight = response.data
       })
@@ -101,46 +84,33 @@ export default {
       moment.locale('ru')
       return moment(dateString, 'YYYY-MM-DD HH:mm').format('LT')
     },
-    betweenDates: function (from, to) {
+    betweenDates: function (from, to, fromGMT, toGMT) {
       moment.locale('ru')
-      return moment.utc(moment(from, 'YYYY-MM-DD HH:mm:ss').diff(moment(to, 'YYYY-MM-DD HH:mm:ss'))).format('HH:mm:ss')
+      let momentFrom = moment(from, 'YYYY-MM-DD HH:mm:ss').add(-fromGMT, 'hours')
+      let momentTo = moment(to, 'YYYY-MM-DD HH:mm:ss').add(-toGMT, 'hours')
+      return moment.utc(momentFrom.diff(momentTo)).format('HH:mm:ss')
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .walls > {
-    .wall {
-      border-bottom: 1px dashed silver;
-      background: white;
-      border-radius: 5px;
-      width: 100%;
-      color: #151d2e;
-      padding: 10px;
-    }
-
-    .wall:last-child {
-      border-bottom: none;
-    }
-  }
 
   .wall.yellow {
     background-color: #fbbc0b;
-  }
+    &.register {
+      .nav-link.active {
+        background-color: #fff7e0;
+      }
 
-  .register {
-    .nav-link.active {
-      background-color: #fff7e0;
-    }
+      form {
+        background-color: #fff7e0;
+        padding: 20px;
 
-    form {
-      background-color: #fff7e0;
-      padding: 20px;
-
-      label.d-block {
-        font-size: 12px !important;
-        color: #7f828b !important;
+        label.d-block {
+          font-size: 12px !important;
+          color: #7f828b !important;
+        }
       }
     }
   }
@@ -164,6 +134,7 @@ export default {
     }
 
     &__info {
+      flex-basis: 110px;
       &__detail {
         &__title {
           font-size: 12px;
@@ -175,6 +146,12 @@ export default {
           font-weight: 700;
           margin-left: -3px;
           margin-top: -10px;
+          &__detail {
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 1.2em;
+            margin-top: -8px;
+          }
         }
 
         &__date {
@@ -197,6 +174,7 @@ export default {
     justify-content: space-between;
 
     &__airlines {
+      flex-basis: 110px;
       max-width: 70%;
       overflow: hidden;
 
@@ -212,6 +190,7 @@ export default {
     }
 
     &__time {
+      flex-basis: 110px;
       display: inline-block;
 
       &__title {

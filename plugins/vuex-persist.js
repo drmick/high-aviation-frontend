@@ -7,7 +7,8 @@ export default ({ store, req, isDev }) => {
     key: 'sitedata',
     reducer: state => ({
       app: state.app,
-      flight: state.flight
+      flight: state.flight,
+      auth: state.auth
     }),
     storage: {
       getItem: (key) => process.client ? Cookies.getJSON(key) : cookie.parse(req.headers.cookie || '')[key],

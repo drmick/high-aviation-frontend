@@ -1,4 +1,4 @@
-# vip-air
+# Vip-aviation-club [frontend]
 
 > Nuxt.js project
 

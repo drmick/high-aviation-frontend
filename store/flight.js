@@ -28,7 +28,7 @@ export default {
   },
   getters: {
     getActiveFlight: state => state.activeFlight,
-    getAirportData: state => state.airportData,
+    getAirportData: state => state.airportData
   },
   state: {
     activeFlight: {},

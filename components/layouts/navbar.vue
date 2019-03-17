@@ -9,7 +9,8 @@
         multi-lang-router-link.navbar__logo__image(to="/")
           img(src='/images/logo.png', alt='Logo')
       span.navbar__buttons
-        button-item(to="#") вход
+        button-item(to="/sign_in", v-if="(!loggedIn)") вход
+        a.button(@click="logout", v-else) выход
 </template>
 
 <script>
@@ -27,6 +28,10 @@ export default {
     }
   },
   computed: {
+    loggedIn: function () {
+      console.log(this.$auth)
+      return this.$auth.loggedIn
+    },
     currentLocale: function () {
       return this.$i18n.locale
     },
@@ -35,6 +40,12 @@ export default {
     }
   },
   methods: {
+    logout: function () {
+      this.$auth.logout().then((result) => {
+        console.log(result)
+      }
+      )
+    },
     changeLocale: function (event) {
       let locale = event.target.value
       this.$i18n.locale = locale

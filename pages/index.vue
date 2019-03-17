@@ -22,9 +22,7 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ButtonItem from '../components/buttonItem'
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
 export default {
   head () {
@@ -32,22 +30,22 @@ export default {
       title: 'Главная'
     }
   },
-  data: function () {
+  asyncData: function () {
     return {
       searchString: '',
       flight: null,
       flightList: []
     }
   },
-  components: { ButtonItem, VueBootstrapTypeahead },
+  components: { ButtonItem },
   watch: {
     searchString: function (newVal) {
       newVal = newVal.split(' ').join('')
       if (newVal.length <= 1) return
       this.$refs.typeahead.inputValue = newVal
       let that = this
-      let uri = 'http://localhost:4000/filter/' + newVal
-      axios.get(uri, {})
+      let uri = 'filter/' + newVal
+      this.$axios.get(uri, {})
         .then(function (response) {
           let data = response.data
           that.flightList = data.map((it) => {
