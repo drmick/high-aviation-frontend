@@ -3,7 +3,7 @@
     #top(ref="top")
       navbar(v-model="sidebarEnabled")
     .container#main-container(:style="mainContainerStyle")
-      // sidebar(:hiddenInMobile="!sidebarEnabled")
+      //sidebar(:hiddenInMobile="!sidebarEnabled")
       #main-block
         #main-block-content
           //breadcrumbs
@@ -99,9 +99,11 @@ export default {
   #main-block {
     display: block;
     padding-left: 260px;
+    padding-right: 260px;
     overflow: auto;
     @media (max-width: $displaySizeSmall) {
       padding-left: 0;
+      padding-right: 0px;
     }
 
     #main-block-content {
