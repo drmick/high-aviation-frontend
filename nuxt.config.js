@@ -1,17 +1,19 @@
 const environment = {
-  API_URL: 'http://localhost:4000/api/v1/'
+
+  DEV_API: 'http://localhost:4000/api/v1/',
+  PROD_API: 'https://highaviation.ru/api/v1/'
 }
 module.exports = {
   head: {
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      { name: 'msapplication-TileColor', content: '#2b5797' },
-      { name: 'theme-color', content: '#ffffff' },
-      { name: 'google-site-verification', content: 'WKSST5zHlhmOtPJuNAGSIhiPTkbQFXexcDAR5t_Oj2M' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width,initial-scale=1'},
+      {name: 'msapplication-TileColor', content: '#2b5797'},
+      {name: 'theme-color', content: '#ffffff'},
+      {name: 'google-site-verification', content: 'WKSST5zHlhmOtPJuNAGSIhiPTkbQFXexcDAR5t_Oj2M'}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
       // { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png?v=ng90LREre9' },
       // { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png?v=ng90LREre9' },
       // { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png?v=ng90LREre9' },
@@ -21,11 +23,11 @@ module.exports = {
     ]
   },
   plugins: [
-    { src: 'plugins/vuex-persist.js' },
+    {src: 'plugins/vuex-persist.js'},
     'plugins/bootstrap',
     'plugins/i18n',
     'plugins/vee-validate',
-    { src: '~/plugins/autocomplete', ssr: false }
+    {src: '~/plugins/autocomplete', ssr: false}
     // 'plugins/moment',
     // { src: 'plugins/notifications', ssr: false },
     // {
@@ -48,9 +50,9 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/users/sign_in', propertyName: 'token' },
-          logout: { url: '/users/sign_out', method: 'delete' },
-          user: { url: '/users/current' }
+          login: {url: '/users/sign_in', propertyName: 'token'},
+          logout: {url: '/users/sign_out', method: 'delete'},
+          user: {url: '/users/current'}
         }
       },
       tokenRequired: true,
@@ -65,7 +67,7 @@ module.exports = {
   },
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: environment.API_URL
+    baseURL: isDev ? environment.DEV_API : environment.PROD_API
     // credentials: true,
     // proxy: false,
     // debug: true,
@@ -80,9 +82,9 @@ module.exports = {
   },
 
   build: {
-    // extractCSS: {
-    //   allChunks: true
-    // },
+     extractCSS: {
+       allChunks: true
+     },
     // extend (config, { isDev, isClient }) {
     //   if (isDev && isClient) {
     //     config.module.rules.push({
@@ -93,7 +95,7 @@ module.exports = {
     //     })
     //   }
     // }
-    extend (config, { isDev }) {
+    extend (config, {isDev}) {
       if (isDev && process.client) {
         config.module.rules.push({
           enforce: 'pre',

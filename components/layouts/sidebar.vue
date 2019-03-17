@@ -2,7 +2,7 @@
   aside(:class="{ 'hidden-in-mobile': hiddenInMobile }")
     //.list-group(itemscope="", itemtype="http://www.schema.org/SiteNavigationElement")
       meta(itemprop="name", :content="$t('categories')")
-      //sidebar-item(:items="tags", prefix="/tag", :activeItem="activeTag", @select="select", :locale="locale")
+      sidebar-item(:items="tags", :activeItem="activeTag", @select="select", :locale="locale")
 </template>
 
 <script>

@@ -1,7 +1,9 @@
+#билд nuxt
 npm run build && pm2 start /var/www/high-aviation-frontend/frontend/ecosystem.config.js --only nuxt-prod
 
+#ubuntu autoload
+sudo vi /etc/rc.local
 
-сертификаты
+#сертификаты
 https://oxozle.com/2018/01/21/nastrojka-ssl-let-s-encrypt-v-nginx-na-ubuntu/
-
 certbot certonly --webroot --agree-tos --no-eff-email --email infiltrator53@gmail.com -w /var/www/letsencrypt -d highaviation.ru -d www.highaviation.ru
