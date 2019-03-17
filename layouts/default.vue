@@ -103,7 +103,7 @@ export default {
     overflow: auto;
     @media (max-width: $displaySizeSmall) {
       padding-left: 0;
-      padding-right: 0px;
+      padding-right: 0;
     }
 
     #main-block-content {

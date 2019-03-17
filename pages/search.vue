@@ -42,7 +42,6 @@
 <script>
 import Fizik from '../components/fizik'
 import moment from 'moment'
-import axios from '../.nuxt/axios'
 
 export default {
   components: { Fizik },

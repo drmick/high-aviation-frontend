@@ -66,7 +66,8 @@ module.exports = {
   },
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: process.NODE_ENV === 'development' ? environment.DEV_API : environment.PROD_API
+    // baseURL: process.NODE_ENV === 'development' ? environment.PROD_API : environment.PROD_API
+    baseURL: environment.PROD_API
     // credentials: true,
     // proxy: false,
     // debug: true,
@@ -84,18 +85,8 @@ module.exports = {
     extractCSS: {
       allChunks: true
     },
-    // extend (config, { isDev, isClient }) {
-    //   if (isDev && isClient) {
-    //     config.module.rules.push({
-    //       enforce: 'pre',
-    //       test: /\.(js|vue)$/,
-    //       loader: 'eslint-loader',
-    //       exclude: /(node_modules)/
-    //     })
-    //   }
-    // }
-    extend (config, { isDev }) {
-      if (isDev && process.client) {
+    extend (config, { isDev, isClient }) {
+      if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -104,5 +95,15 @@ module.exports = {
         })
       }
     }
+    // extend (config, { isDev }) {
+    //   if (isDev && process.client) {
+    //     config.module.rules.push({
+    //       enforce: 'pre',
+    //       test: /\.(js|vue)$/,
+    //       loader: 'eslint-loader',
+    //       exclude: /(node_modules)/
+    //     })
+    //   }
+    // }
   }
 }

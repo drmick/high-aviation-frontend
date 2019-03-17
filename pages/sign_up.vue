@@ -47,6 +47,11 @@
 import MultiLangRouterLink from '../components/multiLangRouterLink'
 
 export default {
+  head () {
+    return {
+      title: 'Регистрация'
+    }
+  },
   name: 'sign_in',
   components: { MultiLangRouterLink },
   asyncData: function () {
@@ -65,7 +70,7 @@ export default {
     register: function () {
       this.$axios.post('users', { user: this.user })
         .then(function (response) {
-          console.log(response)
+          this.$router.push('/check_email')
         })
         .catch(function (error) {
           console.error(error)

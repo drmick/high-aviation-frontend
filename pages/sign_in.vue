@@ -23,6 +23,8 @@
             placeholder="Введите пароль")
             span.error {{ errors.first('password') }}
         multi-lang-router-link.forgot-password(to="#") Забыли пароль?
+        br
+        multi-lang-router-link.forgot-password(to="/sign_up") Регистрация
         a.button(@click="submit") войти
     .wall
       .wall__content
@@ -39,6 +41,11 @@
 import MultiLangRouterLink from '../components/multiLangRouterLink'
 
 export default {
+  head () {
+    return {
+      title: 'Вход'
+    }
+  },
   name: 'sign_in',
   components: { MultiLangRouterLink },
   asyncData: function () {

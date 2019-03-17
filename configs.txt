@@ -1,5 +1,5 @@
 #билд nuxt
-npm run build && pm2 start /var/www/high-aviation-frontend/frontend/ecosystem.config.js --only nuxt-prod
+npm run build && pm2 start /var/www/high-aviation-frontend/high-aviation-frontend/ecosystem.config.js --only nuxt-prod
 
 #ubuntu autoload
 sudo vi /etc/rc.local
