@@ -31,6 +31,7 @@ export default {
     }
   },
   asyncData: function () {
+    console.log(process.env)
     return {
       searchString: '',
       flight: null,

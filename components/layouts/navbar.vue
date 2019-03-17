@@ -29,7 +29,6 @@ export default {
   },
   computed: {
     loggedIn: function () {
-      console.log(this.$auth)
       return this.$auth.loggedIn
     },
     currentLocale: function () {
@@ -42,7 +41,7 @@ export default {
   methods: {
     logout: function () {
       this.$auth.logout().then((result) => {
-        console.log(result)
+        // console.log(result)
       }
       )
     },

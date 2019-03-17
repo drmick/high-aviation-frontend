@@ -1,5 +1,6 @@
 const environment = {
-  API_URL: 'http://localhost:4000/api/v1/'
+  DEV_API: 'http://localhost:4000/api/v1/',
+  PROD_API: 'https://highaviation.ru/api/v1/'
 }
 module.exports = {
   head: {
@@ -55,7 +56,7 @@ module.exports = {
       },
       tokenRequired: true,
       tokenType: 'Bearer'
-    },
+    }
     // redirect: {
     //   login: '/sign_in',
     //   logout: '/',
@@ -65,7 +66,7 @@ module.exports = {
   },
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: environment.API_URL
+    baseURL: process.NODE_ENV === 'development' ? environment.DEV_API : environment.PROD_API
     // credentials: true,
     // proxy: false,
     // debug: true,
@@ -80,9 +81,9 @@ module.exports = {
   },
 
   build: {
-    // extractCSS: {
-    //   allChunks: true
-    // },
+    extractCSS: {
+      allChunks: true
+    },
     // extend (config, { isDev, isClient }) {
     //   if (isDev && isClient) {
     //     config.module.rules.push({
