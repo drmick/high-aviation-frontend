@@ -12,7 +12,6 @@
               .flight__info__detail__title Вылет
               .flight__info__detail__airport {{flight.departure.iataCode}}
               .flight__info__detail__airport__detail {{flight.departure.airportInfo.nameAirport}}, {{flight.departure.airportInfo.nameCountry}}
-
               .flight__info__detail__date {{ dateFormat(flight.departure.scheduledTime)  }}
               .flight__info__detail__time {{ timeFormat(flight.departure.scheduledTime)  }}
           .flight__icon
@@ -35,16 +34,20 @@
       .wall.yellow.register
         b-nav(tabs)
           b-nav-item(active) Частное лицо
-        fizik(:data="fizik")
+        fizik(:data="fizik", :flight="flight", :flight_number="flight_number")
 
 </template>
 
 <script>
+import ButtonItem from '../components/buttonItem'
 import Fizik from '../components/fizik'
 import moment from 'moment'
 
 export default {
-  components: { Fizik },
+  components: {
+    ButtonItem,
+    Fizik
+  },
   head () {
     return {
       title: 'Бронирование'
@@ -57,7 +60,10 @@ export default {
       user: {
         email: ''
       },
-      fizik: {}
+      fizik: {},
+      order: {},
+      flight_number: '',
+      loading: false
     }
   },
   async asyncData (params) {
@@ -72,7 +78,7 @@ export default {
       .catch(function (error) {
         console.error(error)
       })
-    return { flight: flight }
+    return { flight: flight, flight_number: flightNumber }
   },
   methods: {
     dateFormat: function (dateString) {
@@ -93,8 +99,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-
+<style lang="scss">
   .wall.yellow {
     background-color: #fbbc0b;
     &.register {

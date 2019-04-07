@@ -3,14 +3,6 @@
     section.sections__section-1
       p.main HIGH AVIATION CLUB
       p.descr предлагает вам прилетать и улетать из аэропорта «Домодедово» с  максимальным комфортом и удобством
-    //section.sections__section-2
-      ul
-        li(:style="{ backgroundImage: 'url(/images/pic1.png)' }")
-          p.main Персональное здание аэровокзала Домодедово
-        li(:style="{ backgroundImage: 'url(/images/pic2.png)' }")
-          p.main Упрощенное прохождение таможенного оформления
-        li(:style="{ backgroundImage: 'url(/images/pic3.png)' }")
-          p.main Персональный автомобиль до самолета
     section.sections__section-3
       p.main Введите номер вашего рейса,
       p.descr {{$t('home.section-3.descr')}}
@@ -19,10 +11,21 @@
         vue-bootstrap-typeahead(v-model="searchString", :data="flightList", placeholder="№ рейса", ref="typeahead")
       .sections__section-4__button
         button-item(:to="'/search/?flight=' + searchString", :disabled="searchString.length < 1") искать
+      .sections__section-4__loading(v-if="loading")
+        spinner
+    section.sections__section-2
+      ul
+        li(:style="{ backgroundImage: 'url(/images/pic1.png)' }")
+          p.main Персональное здание аэровокзала Домодедово
+        li(:style="{ backgroundImage: 'url(/images/pic2.png)' }")
+          p.main Упрощенное прохождение таможенного оформления
+        li(:style="{ backgroundImage: 'url(/images/pic3.png)' }")
+          p.main Персональный автомобиль до самолета
 </template>
 
 <script>
 import ButtonItem from '../components/buttonItem'
+import Spinner from '../components/spinner'
 
 export default {
   head () {
@@ -31,14 +34,17 @@ export default {
     }
   },
   asyncData: function () {
-    console.log(process.env)
     return {
       searchString: '',
       flight: null,
-      flightList: []
+      flightList: [],
+      loading: false
     }
   },
-  components: { ButtonItem },
+  components: {
+    Spinner,
+    ButtonItem
+  },
   watch: {
     searchString: function (newVal) {
       newVal = newVal.split(' ').join('')
@@ -46,7 +52,9 @@ export default {
       this.$refs.typeahead.inputValue = newVal
       let that = this
       let uri = 'filter/' + newVal
-      this.$axios.get(uri, {})
+      this.$axios.get(uri, {}, {
+        before: this.loading = true
+      })
         .then(function (response) {
           let data = response.data
           that.flightList = data.map((it) => {
@@ -58,12 +66,14 @@ export default {
         .catch(function (error) {
           console.error(error)
           that.flightList = []
+        }).finally(() => {
+          this.loading = false
         })
     }
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .sections {
     section {
       text-align: center;
@@ -107,8 +117,20 @@ export default {
     }
 
     &__section-4 {
+      position: relative;
       &__input {
+        position: relative;
         margin-bottom: 6px;
+      }
+
+      &__loading {
+        z-index: 9999;
+        top: 9px;
+        right: 35px;
+        position: absolute;
+        .lds-ring div {
+          border-color: #e0a80a transparent transparent transparent;
+        }
       }
 
       &__button {

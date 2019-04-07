@@ -3,19 +3,19 @@
     #top(ref="top")
       navbar(v-model="sidebarEnabled")
     .container#main-container(:style="mainContainerStyle")
-      //sidebar(:hiddenInMobile="!sidebarEnabled")
+      sidebar(:hiddenInMobile="!sidebarEnabled")
       #main-block
         #main-block-content
           //breadcrumbs
           nuxt
     //the-bet-modal
-    //no-ssr
+    no-ssr
       notifications(group="simple-notification", position="bottom right")
 </template>
 
 <script>
 import Navbar from '~/components/layouts/navbar'
-// import Sidebar from '~/components/layouts/sidebar'
+import Sidebar from '../components/layouts/sidebar'
 
 export default {
   name: 'Viewport',
@@ -55,6 +55,7 @@ export default {
     }
   },
   components: {
+    Sidebar,
     'navbar': Navbar
     // 'sidebar': Sidebar
   },

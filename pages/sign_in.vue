@@ -3,7 +3,7 @@
     .wall
       .wall__content
         .wall__content__title ВОЙТИ
-        b-form
+        b-form(ref="form")
           b-form-group(label="Email" label-for="email", class="label")
             b-form-input(
             :class="{ 'is-invalid': errors.has('email') }"
@@ -11,7 +11,9 @@
             type="email"
             v-model="user.email"
             v-validate="'required|email'"
-            placeholder="Введите Email")
+            placeholder="Введите Email"
+            ref="email",
+            autocomplete="email username")
             span.error {{ errors.first('email') }}
           b-form-group(label="Пароль" label-for="password")
             b-form-input(
@@ -20,24 +22,32 @@
             type="password"
             v-model="user.password"
             v-validate="'required'"
-            placeholder="Введите пароль")
+            placeholder="Введите пароль"
+            ref="password",
+            autocomplete="password"
+            )
             span.error {{ errors.first('password') }}
-        multi-lang-router-link.forgot-password(to="#") Забыли пароль?
+        multi-lang-router-link.yellow_link(to="/users/forgot_password") Забыли пароль?
         br
-        multi-lang-router-link.forgot-password(to="/sign_up") Регистрация
-        a.button(@click="submit") войти
-    .wall
+        multi-lang-router-link.yellow_link(to="/sign_up") Регистрация
+        br
+        multi-lang-router-link.yellow_link(to="/users/new_confirmation") Не пришло подтверждение на почту?
+        .wall__content__sign-in
+          button-item(@click="submit", :loading="loading") войти
+        .wall__content__error(v-if="error") {{error}}
+    //.wall
       .wall__content
         .wall__content__title ВОЙТИ С ПОМОЩЬЮ СОЦСЕТЕЙ
         .wall__content__social
-          multi-lang-router-link.forgot-password(to="#")
+          multi-lang-router-link(to="#")
             img(src="/images/fb.png")
-          multi-lang-router-link.forgot-password(to="#")
+          multi-lang-router-link(to="#")
             img(src="/images/vk.png")
-
 </template>
 
 <script>
+import ButtonItem from '../components/buttonItem'
+
 import MultiLangRouterLink from '../components/multiLangRouterLink'
 
 export default {
@@ -47,10 +57,24 @@ export default {
     }
   },
   name: 'sign_in',
-  components: { MultiLangRouterLink },
-  asyncData: function () {
+  components: {
+    ButtonItem,
+    MultiLangRouterLink
+  },
+  asyncData: function (params) {
     return {
-      user: {}
+      error: null,
+      user: {
+        email: params.route.query.email
+      },
+      loading: false
+    }
+  },
+  mounted () {
+    if (this.user.email) {
+      this.$refs.password.$el.focus()
+    } else {
+      this.$refs.email.$el.focus()
     }
   },
   methods: {
@@ -58,10 +82,10 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) this.auth()
       }).catch((e) => {
-        console.error(e)
       })
     },
     auth: function () {
+      this.loading = true
       this.$auth.loginWith('local', {
         data: {
           user: {
@@ -70,9 +94,17 @@ export default {
           }
         }
       }).catch(e => {
-        this.error = e + ''
-      }).then((result) => {
-        console.log('res', result)
+        this.error = e.response.data.error
+      }).then((profile) => {
+        // if (window.PasswordCredential) {
+        //   let c = navigator.credentials.create({ password: this.$refs.form })
+        //   return navigator.credentials.store(c)
+        // } else {
+        //   return Promise.resolve(profile)
+        // }
+        // this.$refs.form.submit()
+      }).finally(() => {
+        this.loading = false
       })
     }
   }
@@ -83,6 +115,25 @@ export default {
   .wall {
     &__content {
       padding: 20px 0;
+      &__error {
+        color: red;
+        padding-top: 10px;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      &__sign-in {
+        min-width: 150px;
+        height: 30px;
+        margin-top: 25px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        .btn-wrapper {
+          padding: 0 30px;
+          min-width: 150px;
+        }
+      }
 
       &__title {
         color: #e0a80a;
@@ -100,11 +151,6 @@ export default {
         img {
           margin: 8px;
         }
-      }
-
-      a.button {
-        min-height: 30px;
-        margin-top: 10px;
       }
     }
   }
@@ -127,7 +173,7 @@ export default {
     }
   }
 
-  .forgot-password {
+  .yellow_link {
     font-size: 12px;
     color: #e0a80a;
   }

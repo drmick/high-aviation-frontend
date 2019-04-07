@@ -2,7 +2,7 @@
   .walls
     .wall
       .wall__content
-        .wall__content__title РЕГИСТРАЦИЯ
+        .wall__content__title ПОВТОРНАЯ ОТПРАВКА ПОДТВЕРЖДЕНИЯ
         b-form
           b-form-group(label="Email" label-for="email", class="label")
             b-form-input(
@@ -13,78 +13,51 @@
             v-validate="'required|email'"
             placeholder="Введите Email")
             span.error {{ errors.first('email') }}
-          b-form-group(label="Пароль" label-for="password")
-            b-form-input(
-            :class="{ 'is-invalid': errors.has('password') }"
-            name="password"
-            type="password"
-            v-model="user.password"
-            v-validate="'required'"
-            placeholder="Введите пароль")
-            span.error {{ errors.first('password') }}
-          b-form-group(label="Подтверждение пароля" label-for="password_confirmation")
-            b-form-input(
-            :class="{ 'is-invalid': errors.has('password_confirmation') }"
-            name="password_confirmation"
-            type="password"
-            v-model="user.password_confirmation"
-            v-validate="'required'"
-            placeholder="Повторите пароль")
-            span.error {{ errors.first('password_confirmation') }}
-        multi-lang-router-link.yellow_link(to="/users/new_confirmation") Не пришло подтверждение на почту?
-        .wall__content__sign-up
-          button-item(@click="submit", :loading="loading") зарегистрироваться
+        .wall__content__sign-in
+          button-item(@click="submit", :loading="loading") отправить
         .wall__content__error(v-if="error") {{error}}
-    .wall
-      .wall__content
-        .wall__content__title ВОЙТИ С ПОМОЩЬЮ СОЦСЕТЕЙ
-        .wall__content__social
-          multi-lang-router-link(to="#")
-            img(src="/images/fb.png")
-          multi-lang-router-link(to="#")
-            img(src="/images/vk.png")
-
 </template>
 
 <script>
-import ButtonItem from '../components/buttonItem'
-import MultiLangRouterLink from '../components/multiLangRouterLink'
+import ButtonItem from '../../components/buttonItem'
+
+import MultiLangRouterLink from '../../components/multiLangRouterLink'
 
 export default {
   head () {
     return {
-      title: 'Регистрация'
+      title: 'Повторная отправка подтверждения почты'
     }
   },
-  name: 'sign_in',
-  components: { ButtonItem, MultiLangRouterLink },
+  name: 'new_confirmation',
+  components: {
+    ButtonItem,
+    MultiLangRouterLink
+  },
   asyncData: function () {
     return {
-      user: {},
       error: null,
+      user: {},
       loading: false
     }
-  },
-  mounted () {
   },
   methods: {
     submit: function () {
       this.$validator.validateAll().then((result) => {
-        if (result) this.register()
+        if (result) this.sendConfirmation()
       }).catch((e) => {
-        console.error(e)
       })
     },
-    register: function () {
-      let router = this.$router
+    sendConfirmation: function () {
       let veeErrors = this.errors
-      this.$axios.post('users', { user: this.user }, {
+      let router = this.$router
+      this.$axios.post('users/confirmation', { user: this.user }, {
         before: this.loading = true
       })
-        .then(function (response) {
+        .then(() => {
           router.push({
             path: '/message',
-            query: { message: 'На ваш почтовый ящик отправлена ссылка для подтверждения почты' }
+            query: { message: 'На ваш почтовый ящик отправлена ссылка для подтверждения регистрации' }
           })
         })
         .catch(function (e) {
@@ -126,7 +99,8 @@ export default {
         text-align: center;
       }
 
-      &__sign-up {
+      &__sign-in {
+        min-width: 150px;
         height: 30px;
         margin-top: 25px;
         text-align: center;
@@ -155,11 +129,6 @@ export default {
           margin: 8px;
         }
       }
-
-      a.button {
-        min-height: 30px;
-        margin-top: 10px;
-      }
     }
   }
 
@@ -181,7 +150,7 @@ export default {
     }
   }
 
-  .yellow_link {
+  .forgot-password {
     font-size: 12px;
     color: #e0a80a;
   }

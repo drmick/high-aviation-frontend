@@ -118,6 +118,7 @@ export default {
 
       .btn-wrapper {
         padding-bottom: 2px;
+        border-radius: 2px;
       }
     }
   }

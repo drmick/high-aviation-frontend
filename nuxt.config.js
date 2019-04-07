@@ -26,9 +26,9 @@ module.exports = {
     'plugins/bootstrap',
     'plugins/i18n',
     'plugins/vee-validate',
-    { src: '~/plugins/autocomplete', ssr: false }
+    { src: '~/plugins/autocomplete', ssr: false },
     // 'plugins/moment',
-    // { src: 'plugins/notifications', ssr: false },
+    { src: 'plugins/notifications', ssr: false },
     // {
     //   src: 'plugins/clipboard',
     //   ssr: false

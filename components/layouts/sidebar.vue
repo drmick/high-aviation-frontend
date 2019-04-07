@@ -1,12 +1,12 @@
 <template lang="pug">
   aside(:class="{ 'hidden-in-mobile': hiddenInMobile }")
-    //.list-group(itemscope="", itemtype="http://www.schema.org/SiteNavigationElement")
-      meta(itemprop="name", :content="$t('categories')")
-      sidebar-item(:items="tags", :activeItem="activeTag", @select="select", :locale="locale")
+    .list-group(itemscope="", itemtype="http://www.schema.org/SiteNavigationElement")
+      sidebar-item(url="/", label="Главная")
+      sidebar-item(url="/about", label="О клубе")
+      sidebar-item(url="/history", label="История бронирования")
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import SidebarItem from '~/components/sidebarItem'
 
 export default {
@@ -17,38 +17,6 @@ export default {
     }
   },
   components: { SidebarItem },
-  created () {
-    // let tagPath = ''
-    // if (this.$route.params.level_1) {
-    //   tagPath += '/' + this.$route.params.level_1
-    // }
-    // if (this.$route.params.level_2) {
-    //   tagPath += '/' + this.$route.params.level_2
-    // }
-    // if (this.$route.params.level_3) {
-    //   tagPath += '/' + this.$route.params.level_3
-    // }
-    // this.select(tagPath)
-  },
-  computed: {
-    locale: function () {
-      return this.$i18n.locale
-    },
-    ...mapGetters(
-      {
-        tags: 'tag/getTags',
-        activeTag: 'tag/getActiveTag'
-      }
-    ),
-    routes () {
-      return this.$router.options.routes
-    }
-  },
-  methods: {
-    select: function (tag) {
-      // this.$store.dispatch('tag/setActiveTag', tag)
-    }
-  }
 }
 </script>
 
@@ -56,6 +24,7 @@ export default {
   @import '~/assets/css/constants.scss';
 
   aside {
+    padding-top: 30px;
     float: left;
     overflow-y: auto;
     overflow-x: hidden;
@@ -87,7 +56,7 @@ export default {
 
     @media (max-width: $displaySizeSmall) {
       padding: 10px;
-      width: 100%;
+      width: 90%;
       overflow-y: auto;
       position: fixed;
       left: 0;
@@ -98,6 +67,7 @@ export default {
       &.hidden-in-mobile {
         display: none;
       }
+      padding-top: 30px;
     }
   }
 
