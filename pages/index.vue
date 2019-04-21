@@ -18,7 +18,7 @@
         li(:style="{ backgroundImage: 'url(/images/pic1.png)' }")
           p.main Персональное здание аэровокзала Домодедово
         li(:style="{ backgroundImage: 'url(/images/pic2.png)' }")
-          p.main Упрощенное прохождение таможенного оформления
+          p.main Упрощённую процедуру регистрации на рейс
         li(:style="{ backgroundImage: 'url(/images/pic3.png)' }")
           p.main Персональный автомобиль до самолета
 </template>

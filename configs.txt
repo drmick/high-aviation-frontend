@@ -6,4 +6,4 @@ sudo vi /etc/rc.local
 
 #сертификаты
 https://oxozle.com/2018/01/21/nastrojka-ssl-let-s-encrypt-v-nginx-na-ubuntu/
-certbot certonly --webroot --agree-tos --no-eff-email --email infiltrator53@gmail.com -w /var/www/letsencrypt -d highaviation.ru -d www.highaviation.ru
+certbot certonly --webroot --agree-tos --no-eff-email --email contact@bittobe.com -w /var/www/letsencrypt -d bittobe.com -d www.bittobe.com

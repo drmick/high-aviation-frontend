@@ -86,6 +86,7 @@
 <script>
 
 import ButtonItem from './buttonItem'
+// import uuidv1 from 'uuid/v1'
 
 export default {
   components: { ButtonItem },
@@ -98,6 +99,7 @@ export default {
   name: 'fizik',
   props: ['data', 'flight', 'flight_number'],
   methods: {
+
     submit: function () {
       this.$validator.validateAll().then((result) => {
         if (result) this.pushOrder()
@@ -105,7 +107,7 @@ export default {
         console.error(e)
       })
     },
-    createOrder: function () {
+    createOrder: function (guid, id) {
       this.order = {
         first_name: this.data.first_name,
         last_name: this.data.last_name,
@@ -117,48 +119,62 @@ export default {
         flight_from: this.flight.departure.iataCode,
         flight_to: this.flight.arrival.iataCode,
         full_data: this.flight,
-        external_key: 'test'
+        external_key: 'test',
+        id: id,
+        guid: guid
       }
     },
     pushOrder: function () {
-      if (!this.$auth.loggedIn) {
-        this.$notify({ group: 'simple-notification', text: 'Необходимо авторизоваться!' })
+      // if (!this.$auth.loggedIn) {
+      //   this.$notify({ group: 'simple-notification', text: 'Необходимо авторизоваться!' })
+      // } else {
+      let that = this
+      if (this.order.guid) {
+        this.createOrder(this.order.guid, this.order.id)
+        this.$axios.put('orders/' + this.order.guid, { order: this.order }, {
+          before: this.loading = true
+        })
+          .then(function (response) {
+            that.order = response.data
+            that.successPushOrder(that.order)
+          })
+          .catch(function (response) {
+            console.error(response)
+          }).finally(() => {
+            this.loading = false
+          })
       } else {
-        let that = this
-        if (this.order.id) {
-          this.$axios.put('orders/' + this.order.id, { order: this.order }, {
-            before: this.loading = true
+        this.createOrder(this.order.guid, this.order.id)
+        this.$axios.post('orders', { order: this.order }, {
+          before: this.loading = true
+        })
+          .then(function (response) {
+            that.order.guid = response.data.guid
+            that.order.id = response.data.id
+            that.successPushOrder(that.order)
           })
-            .then(function (response) {
-              that.order = response.data
-              this.successPushOrder(that.order)
-            })
-            .catch(function (response) {
-              console.error(response)
-            }).finally(() => {
-              this.loading = false
-            })
-        } else {
-          this.createOrder()
-          this.$axios.post('orders', { order: this.order }, {
-            before: this.loading = true
+          .catch(function (response) {
+            // console.log(response)
+          }).finally(() => {
+            this.loading = false
           })
-            .then(function (response) {
-              that.order = response.data
-              that.successPushOrder(that.order)
-            })
-            .catch(function (response) {
-              // console.log(response)
-            }).finally(() => {
-              this.loading = false
-            })
-        }
       }
     },
     successPushOrder: function (order) {
       this.$router.push({
-        path: '/message',
-        query: { message: 'Бронирование успешно завершено. Дополнительную информацию вы можете получить в разделе "История бронирования"' }
+        path: '/new_payment',
+        query: { type: 'fizik',
+          first_name: order.first_name,
+          last_name: order.last_name,
+          middle_name: order.middle_name,
+          phone: order.phone,
+          email: order.email,
+          flight_number: order.flight_number,
+          flight_date: order.flight_date,
+          flight_from: order.flight_from,
+          flight_to: order.flight_to,
+          guid: order.guid,
+          order_id: order.id }
       })
     }
   }

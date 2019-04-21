@@ -35,7 +35,10 @@
     "vue-yandex-metrika": "^1.7.2",
     "vuex-persist": "^2.0.0",
     "vuex-persistedstate": "^2.5.4",
-    "vue-bootstrap-typeahead": "^0.2.6"
+    "vue-bootstrap-typeahead": "^0.2.6",
+    "node-robokassa": "^0.0.0",
+    "md5": "^2.2.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

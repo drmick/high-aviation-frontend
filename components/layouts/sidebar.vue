@@ -3,7 +3,7 @@
     .list-group(itemscope="", itemtype="http://www.schema.org/SiteNavigationElement")
       sidebar-item(url="/", label="Главная")
       sidebar-item(url="/about", label="О клубе")
-      sidebar-item(url="/history", label="История бронирования")
+      sidebar-item(url="/history", label="История бронирования", v-if="loggedIn")
 </template>
 
 <script>
@@ -16,7 +16,12 @@ export default {
       required: true
     }
   },
-  components: { SidebarItem },
+  computed: {
+    loggedIn: function () {
+      return this.$auth.loggedIn
+    }
+  },
+  components: { SidebarItem }
 }
 </script>
 
