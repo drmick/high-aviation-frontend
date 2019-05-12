@@ -67,7 +67,7 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: process.NODE_ENV === 'development' ? environment.PROD_API : environment.PROD_API
-    baseURL: environment.PROD_API
+    baseURL: environment.DEV_API
     // credentials: true,
     // proxy: false,
     // debug: true,

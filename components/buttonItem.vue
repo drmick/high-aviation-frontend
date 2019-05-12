@@ -36,6 +36,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  @import '~/assets/css/constants.scss';
+
   .spinner {
     height: 14px;
     width: 14px;
@@ -48,21 +50,20 @@ export default {
     .btn-wrapper {
       position: relative;
       padding: 0 10px;
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 400;
       height: 100%;
       border-radius: 4px;
       text-align: center;
-      font-size: 12px;
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f4cc66+0,f8ba0b+100 */
-      background: rgb(244, 204, 102); /* Old browsers */
-      background: -moz-linear-gradient(top, rgba(244, 204, 102, 1) 0%, rgb(214, 160, 9) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(top, rgba(244, 204, 102, 1) 0%, rgb(214, 160, 9) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to bottom, rgba(244, 204, 102, 1) 0%, rgb(214, 160, 9) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4cc66', endColorstr='#f8ba0b', GradientType=0); /* IE6-9 */
+      background-color: $main-color-3;
+      font-family: Montserrat,sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 18px;
+      text-transform: uppercase;
+      cursor: pointer;
     }
   }
 </style>

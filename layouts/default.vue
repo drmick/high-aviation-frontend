@@ -18,7 +18,7 @@ import Navbar from '~/components/layouts/navbar'
 import Sidebar from '../components/layouts/sidebar'
 
 export default {
-  name: 'Viewport',
+  name: 'default',
   head () {
     return {
       titleTemplate: '%s | ' + this.$t('siteName'),
@@ -79,7 +79,7 @@ export default {
   #main {
     background-color: $background-color;
     color: white;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Montserrat", sans-serif;
     min-height: 100vh;
   }
 

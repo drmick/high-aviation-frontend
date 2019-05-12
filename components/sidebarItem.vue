@@ -43,7 +43,7 @@ export default {
     border-radius: 0;
     white-space: nowrap;
     text-align: left;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     padding: 10px 15px;
     margin-bottom: 0;
     background-color: transparent;
