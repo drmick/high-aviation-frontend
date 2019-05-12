@@ -24,6 +24,7 @@
 import ButtonItem from './buttonItem'
 export default {
   name: 'help-modal',
+  props: ['visible'],
   model: {
     prop: 'visible',
     event: 'close'
@@ -31,7 +32,7 @@ export default {
   components: { ButtonItem },
   methods: {
     close: function () {
-      this.$emit('change', false)
+      this.$emit('close', false)
     }
   }
 }

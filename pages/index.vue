@@ -10,7 +10,7 @@
       .page__search__errortext
         | рейс не найден
     .page__button
-      button-item(:to="'/search/?flight=' + searchString", :disabled="notFound || searchString.length === 0", @click.native="click") поиск
+      button-item(:to="'/search/?flight=' + searchString", :disabled="notFound || searchString.length === 0") поиск
     .page__help
       .page__help__arrow
       .page__help__text
@@ -45,7 +45,7 @@ export default {
       flightList: [],
       loading: false,
       notFound: false,
-      helpVisible: true
+      helpVisible: false
     }
   },
   components: {
