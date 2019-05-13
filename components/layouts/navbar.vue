@@ -7,7 +7,7 @@
         div
       span.navbar__logo
         multi-lang-router-link.navbar__logo__image(to="/")
-          img(src='/images/logo.png', alt='Logo')
+          img(src='/images/logo.svg', alt='Logo')
       span.navbar__buttons
         button-item(to="/sign_in", v-if="(!loggedIn)") вход
         a.button(@click="logout", v-else) выход
@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   @import '~/assets/css/app.scss';
 
   $color-1: #bfceda;
@@ -77,7 +77,7 @@ export default {
     padding: 8px 10px;
 
     @media (max-width: $displaySizeSmall) {
-      height: 50px;
+      height: 60px;
     }
 
     &__logo {
@@ -98,26 +98,27 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      padding: 15px;
+      padding: 20px 20px 20px 13px;
 
       div {
-        width: 16px;
+        width: 18px;
         height: 2px;
         background-color: white;
         margin: 3px 0;
         border-radius: 5px;
       }
 
-      &__middle {
-        margin-left: 4px !important;
-      }
+      /*&__middle {*/
+        /*margin-left: 4px !important;*/
+      /*}*/
     }
 
     &__buttons {
       height: 22px;
+      font-size: 12px !important;
 
-      .btn-wrapper {
-        padding-bottom: 2px;
+      a > .btn-wrapper {
+        font-size: 12px !important;
         border-radius: 2px;
       }
     }

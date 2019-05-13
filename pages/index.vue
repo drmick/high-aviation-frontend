@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     help-modal(v-model="helpVisible")
-    img.page__logo(src="/images/main-logo.png")
+    img.page__logo(src="/images/main-logo.svg")
     .page__title
       | VIP терминал аэропорта
       strong «Домодедово»
@@ -21,7 +21,7 @@
         | чтобы начать бронирование
     .page__help-button
       button-item(@click="visibleHelpBtn")
-        img(src="/images/question-icon.png")
+        img(src="/images/question-icon.svg")
         | Справка
 
 </template>
@@ -153,7 +153,7 @@ export default {
         height: 50px;
         left: 65px;
         top: 440px;
-        background: url("/images/arrow.png");
+        background: url("/images/arrow.svg");
       }
       &__text {
         position: absolute;

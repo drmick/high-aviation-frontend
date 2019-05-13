@@ -2,6 +2,7 @@
   div#main
     #top(ref="top")
       navbar(v-model="sidebarEnabled")
+    //.container#main-container(:style="mainContainerStyle")
     .container#main-container(:style="mainContainerStyle")
       sidebar(:hiddenInMobile="!sidebarEnabled")
       #main-block
@@ -49,11 +50,11 @@ export default {
   updated () {
     this.handleResize()
   },
-  computed: {
-    mainContainerStyle: function () {
-      return { 'padding-top': 15 + this.headerHeight + 'px !important' }
-    }
-  },
+  // computed: {
+  //   mainContainerStyle: function () {
+  //     return { 'padding-top': 0 + this.headerHeight + 'px !important' }
+  //   }
+  // },
   components: {
     Sidebar,
     'navbar': Navbar
@@ -93,7 +94,7 @@ export default {
     padding-top: 50px;
     position: relative;
     @media (max-width: $displaySizeSmall) {
-      padding: 10px 10px 10px;
+      padding: 60px 10px 0;
     }
   }
 

@@ -4,8 +4,9 @@
       .wall
         p Рейс не найден
     .walls(v-else)
-      .wall
+      .wall.wall-1
         .title Ваш рейс
+      .wall.wall-2
         .flight
           .flight__info
             .flight__info__detail
@@ -15,7 +16,7 @@
               .flight__info__detail__date {{ dateFormat(flight.departure.scheduledTime)  }}
               .flight__info__detail__time {{ timeFormat(flight.departure.scheduledTime)  }}
           .flight__icon
-            img(src="/images/flight.png")
+            img(src="/images/flight.svg")
           .flight__info
             .flight__info__detail
               .flight__info__detail__title Прилет
@@ -23,15 +24,19 @@
               .flight__info__detail__airport__detail {{flight.arrival.airportInfo.nameAirport}}, {{flight.arrival.airportInfo.nameCountry}}
               .flight__info__detail__date {{ dateFormat(flight.arrival.scheduledTime)  }}
               .flight__info__detail__time {{ timeFormat(flight.arrival.scheduledTime)  }}
-      .wall
+      .wall.wall-3
         .flight-common
           .flight-common__airlines
             .flight-common__airlines__title Авиакомпания
             .flight-common__airlines__name {{ flight.airline.name }}
           .flight-common__time
-            .flight-common__airlines__title Время в пути
-            .flight-common__airlines__name {{ betweenDates(flight.arrival.scheduledTime, flight.departure.scheduledTime, flight.arrival.airportInfo.GMT, flight.departure.airportInfo.GMT) }}
-      .wall.yellow.register
+            .flight-common__time__title В пути
+            .flight-common__time__value {{ betweenDates(flight.arrival.scheduledTime, flight.departure.scheduledTime, flight.arrival.airportInfo.GMT, flight.departure.airportInfo.GMT) }}
+      multi-lang-router-link(:to="'/register_vip/' + flight_number")
+        .next-button ЗАБРОНИРОВАТЬ VIP
+      multi-lang-router-link(to="/rules")
+        .rules Правила использования
+      //.wall.yellow.register
         b-nav(tabs)
           b-nav-item(active) Частное лицо
         fizik(:data="fizik", :flight="flight", :flight_number="flight_number")
@@ -42,9 +47,11 @@
 import ButtonItem from '../components/buttonItem'
 import Fizik from '../components/fizik'
 import moment from 'moment'
+import MultiLangRouterLink from '../components/multiLangRouterLink'
 
 export default {
   components: {
+    MultiLangRouterLink,
     ButtonItem,
     Fizik
   },
@@ -93,13 +100,19 @@ export default {
       moment.locale('ru')
       let momentFrom = moment(from, 'YYYY-MM-DD HH:mm:ss').add(-fromGMT, 'hours')
       let momentTo = moment(to, 'YYYY-MM-DD HH:mm:ss').add(-toGMT, 'hours')
-      return moment.utc(momentFrom.diff(momentTo)).format('HH:mm:ss')
+      return moment.utc(momentFrom.diff(momentTo)).format('H:mm')
     }
   }
 }
 </script>
 
 <style lang="scss">
+  @import "~/assets/css/constants.scss";
+  .walls {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+  }
   .wall.yellow {
     background-color: #fbbc0b;
     &.register {
@@ -119,20 +132,63 @@ export default {
     }
   }
 
-  .title {
-    color: #e0a80a;
-    font-size: 16px;
-    font-weight: 600;
+  .wall.wall-1, .wall.wall-3 {
+    background: #FAFAFA;
+  }
+
+  .wall-3 {
+    border-bottom: 0 !important;
+  }
+
+  .wall-2 {
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 20px;
+    flex-direction: column;
+  }
+
+  .next-button {
+    height: 83px;
+    background-color: $main-color-3;
+    width: 100%;
+    border-radius: 5px;
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
     text-align: center;
     text-transform: uppercase;
-    padding-top: 25px;
+    justify-content: space-around;
+    color: white;
+  }
+
+  .title {
+    height: 63px;
+    color: $main-color-3;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 21px;
+  }
+
+  .rules {
+    height: 38px;
+    text-align: center;
+    line-height: 38px;
+    color: $main-color-3;
+    font-size: 12px;
   }
 
   .flight {
+    font-family: Montserrat, sans-serif;
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-
+    padding: 50px 20px 20px;
     &__icon {
       padding-top: 28px;
     }
@@ -141,12 +197,12 @@ export default {
       flex-basis: 110px;
       &__detail {
         &__title {
-          font-size: 12px;
+          font-size: 14px;
           color: #828282;
         }
 
         &__airport {
-          font-size: 48px;
+          font-size: 50px;
           font-weight: 700;
           margin-left: -3px;
           margin-top: -10px;
@@ -159,13 +215,15 @@ export default {
         }
 
         &__date {
-          color: #828282;
+          margin-top: 30px;
+          color: black;
           font-size: 12px;
         }
 
         &__time {
-          font-size: 24px;
-          font-weight: 700;
+
+          font-size: 26px;
+          font-weight: 800;
           margin-top: -5px;
         }
       }
@@ -188,7 +246,7 @@ export default {
       }
 
       &__name {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: bold;
       }
     }
@@ -203,8 +261,8 @@ export default {
       }
 
       &__value {
-        font-size: 16px;
-        font-weight: bold;
+        font-size: 20px;
+        font-weight: 800;
       }
     }
   }

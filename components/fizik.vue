@@ -8,8 +8,7 @@
       type="text"
       label="Фамилия"
       v-model="data.last_name"
-      v-validate="'required'"
-      placeholder="Введите фамилию")
+      v-validate="'required'")
       span.error {{ errors.first('Фамилия') }}
 
     b-form-group(label="Имя" label-for="Имя", class="label")
@@ -18,8 +17,7 @@
       name="Имя"
       type="text"
       v-model="data.first_name"
-      v-validate="'required'"
-      placeholder="Введите имя")
+      v-validate="'required'")
       span.error {{ errors.first('Имя') }}
 
     b-form-group(label="Отчество" label-for="Отчество")
@@ -27,8 +25,7 @@
       :class="{ 'is-invalid': errors.has('Отчество') }"
       name="Отчество"
       type="text"
-      v-model="data.middle_name"
-      placeholder="Введите отчество")
+      v-model="data.middle_name")
       span.error {{ errors.first('Отчество') }}
 
     b-form-group(label="Email" label-for="Email")
@@ -37,21 +34,19 @@
       type="email"
       name="Email"
       v-model="data.email"
-      v-validate="'email|required'"
-      placeholder="Введите email")
+      v-validate="'email|required'")
       span.error {{ errors.first('Email') }}
 
-    b-form-group(
-    label="Телефон"
-    label-for="Телефон")
-      b-form-input(
-      :class="{ 'is-invalid': errors.has('Телефон') }"
-      type="text"
-      name="Телефон"
-      v-model="data.phone"
-      v-validate="'required'"
-      placeholder="Введите номер телефона")
-      span.error {{ errors.first('Телефон') }}
+    <!--b-form-group(-->
+    <!--label="Телефон"-->
+    <!--label-for="Телефон")-->
+      <!--b-form-input(-->
+      <!--:class="{ 'is-invalid': errors.has('Телефон') }"-->
+      <!--type="text"-->
+      <!--name="Телефон"-->
+      <!--v-model="data.phone"-->
+      <!--v-validate="'required'")-->
+      <!--span.error {{ errors.first('Телефон') }}-->
 
     input(name="receiver" type="hidden" value="4100325939851" )
     //input(name="formcomment" type="hidden" value=("Проект «Железный человек»: реактор холодного ядерного синтеза") )
@@ -114,11 +109,12 @@ export default {
         middle_name: this.data.middle_name,
         phone: this.data.phone,
         email: this.data.email,
-        flight_number: this.flight_number,
-        flight_date: this.flight.departure.scheduledTime,
-        flight_from: this.flight.departure.iataCode,
-        flight_to: this.flight.arrival.iataCode,
-        full_data: this.flight,
+        // flight_number: this.flight_number,
+        // flight_date: this.flight.departure.scheduledTime,
+        // flight_from: this.flight.departure.iataCode,
+        // flight_to: this.flight.arrival.iataCode,
+        // full_data: this.flight,
+        flight: this.flight,
         external_key: 'test',
         id: id,
         guid: guid
@@ -169,10 +165,11 @@ export default {
           middle_name: order.middle_name,
           phone: order.phone,
           email: order.email,
-          flight_number: order.flight_number,
-          flight_date: order.flight_date,
-          flight_from: order.flight_from,
-          flight_to: order.flight_to,
+          // flight_number: order.flight_number,
+          // flight_date: order.flight_date,
+          // flight_from: order.flight_from,
+          // flight_to: order.flight_to,
+          flight: order.flight,
           guid: order.guid,
           order_id: order.id }
       })
@@ -197,17 +194,43 @@ export default {
   }
 
   form {
+
     .form-group {
+      position: relative;
+      padding-bottom: 5px;
+      input {
+        height: 46px;
+        border-radius: 0;
+        border: 1px solid #CCCCCC;
+        &:focus {
+          box-shadow: none !important;
+        }
+      }
+      input.is-invalid {
+        background-image: none;
+      }
       label {
+        font-family: Montserrat, sans-serif !important;
+        background-color: white;
+        position: absolute;
+        top: -7px;
+        left: 10px;
+        padding-left: 3px;
+        padding-right: 3px;
         font-size: 12px !important;
-        font-family: "Open Sans", sans-serif;
-        color: #121e2a;
+        color: #828282 !important;
         margin-bottom: 5px;
       }
 
       span.error {
         color: #dc3545;
         font-size: 12px;
+        position: absolute;
+        background: white;
+        bottom: -3px;
+        right: 10px;
+        padding-left: 3px;
+        padding-right: 3px;
       }
       margin-bottom: 10px;
     }

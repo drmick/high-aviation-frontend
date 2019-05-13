@@ -1,19 +1,19 @@
 <template lang="pug">
   .help-modal(v-if="visible")
-    img.help-modal__logo(src="/images/main-logo.png")
+    img.help-modal__logo(src="/images/main-logo.svg")
     .help-modal__body
       div
         .help-modal__body__row
           div
-            img(src="/images/help-icon-1.png")
+            img(src="/images/help-icon-1.svg")
           div Прилетайте и улетайте из персонального аэровокзала «Домодедово» с максимальным комфортом и удобством
         .help-modal__body__row
           div
-            img(src="/images/help-icon-2.png")
+            img(src="/images/help-icon-2.svg")
           div Проходите таможенное оформление без лишней головной боли
         .help-modal__body__row
           div
-            img(src="/images/help-icon-3.png")
+            img(src="/images/help-icon-3.svg")
           div Воспользуйтесь персональным автомобилем до вашего самолёта
       button-item.help-modal__body__close-button(@click="close")
         img(src="/images/close-icon.svg")
