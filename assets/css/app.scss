@@ -9,8 +9,13 @@ html, body {
 
   a:visited, a:hover {
     color: #28a745;
-    background-color: transparent !important;
+    //background-color: transparent !important;
   }
+
+  .page {
+    max-width: 768px;
+  }
+
 
   a::-moz-focus-inner, select::-moz-focus-inner {
     border: 0;
@@ -34,4 +39,8 @@ html, body {
     width: 100%;
     max-width: 100%;
   }
+}
+
+.vbt-autcomplete-list {
+  padding-top: 0 !important;
 }

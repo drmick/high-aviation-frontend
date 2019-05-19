@@ -4,3 +4,15 @@ import Vue from 'vue'
 
 Vue.use(VeeValidate)
 Validator.localize('ru', ru)
+
+const dictionary = {
+  ru: {
+    messages: {
+      required: () => 'Обязательно для заполнения',
+      email: () => 'Некорректный email',
+      numeric: () => 'Поле должно быть числом'
+    }
+  }
+}
+
+Validator.localize(dictionary)

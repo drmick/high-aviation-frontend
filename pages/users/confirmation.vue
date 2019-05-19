@@ -14,7 +14,6 @@ export default {
     let confirmationNumber = params.query.confirmation_token
     await params.$axios.get('users/confirmation?confirmation_token=' + confirmationNumber, {})
       .then(function (response) {
-        console.log(222, response.data.email)
         try {
           params.redirect({ path: '/sign_in', query: { email: response.data.email } })
         } catch (e) {

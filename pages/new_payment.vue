@@ -1,6 +1,4 @@
 <template lang="pug">
-  .walls
-    | {{paymentUrl}}
 </template>
 
 <script>
@@ -10,6 +8,7 @@ export default {
       title: 'Уведомление'
     }
   },
+  layout: 'none',
   name: 'message',
   async asyncData (params) {
     let firstName = params.query.first_name
@@ -22,21 +21,22 @@ export default {
     let flightTo = params.query.flight_to
     let guid = params.query.guid
     let orderId = params.query.order_id
-
+    let price = params.query.price
     const robokassa = require('node-robokassa')
     const robokassaHelper = new robokassa.RobokassaHelper({
       // REQUIRED OPTIONS:
       merchantLogin: 'HAC',
       hashingAlgorithm: 'md5',
-      password1: 'IYH1tBreYtU32TAb6AN5',
-      password2: 'YFqK6OIbh1Ea080guVDn',
+      password1: 'Xb4YbRf1De0L94IsqDoE',
+      password2: 'FVh9B9MEIHj77Q4uuNFf',
+      IncCurrLabel: 'BankCard',
 
       // OPTIONAL CONFIGURATION
       testMode: true, // Whether to use test mode globally
       resultUrlRequestMethod: 'POST' // HTTP request method selected for "ResultURL" requests
 
     })
-    const outSum = 380
+    const outSum = price
     const invDesc = `Платеж №${orderId}. Оплата услуг сайта highaviation.ru`
 
     let userData = {
@@ -55,19 +55,20 @@ export default {
     if (!middleName) {
       delete userData.middle_name
     }
-
     // Optional options.
     const options = {
       invId: orderId, // Your custom order ID
-      email: 'infiltrator53@gmail.com', // E-Mail of the paying user
-      outSumCurrency: 'USD', // Transaction currency
+      email: email, // E-Mail of the paying user
+      incCurrLabel: 'BankCard',
+      outSumCurrency: 'RUR', // Transaction currency
       isTest: true, // Whether to use test mode for this specific transaction
       userData: userData
     }
 
     const paymentUrl = robokassaHelper.generatePaymentUrl(outSum, invDesc, options)
 
-    return params.redirect(paymentUrl)
+    // console.log(paymentUrl + '&IncCurrLabel=BankCard')
+    return params.redirect(paymentUrl + '&IncCurrLabel=BankCard')
   }
 }
 </script>

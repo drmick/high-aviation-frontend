@@ -19,6 +19,9 @@
         | номер вашего рейса,
         br
         | чтобы начать бронирование
+    .page__service-info
+       .t1 Стоимость услуги 390$
+       .t2 Расчет стоимости по курсу ЦБ на день оплаты
     .page__help-button
       button-item(@click="visibleHelpBtn")
         img(src="/images/question-icon.svg")
@@ -95,7 +98,7 @@ export default {
   @import "~/assets/css/constants.scss";
   .page {
     overflow-x: hidden;
-    min-height: 620px;
+    min-height: 660px;
     position: absolute;
     height: 100vh;
     width: 100%;
@@ -218,6 +221,19 @@ export default {
       }
     }
 
+    &__service-info {
+      text-align: center;
+      font-size: 12px;
+      color: white;
+      bottom: 75px;
+      height: 46px;
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      .t1 {
+        font-weight: bold;
+      }
+    }
     &__help-button {
       bottom: 23px;
       height: 46px;

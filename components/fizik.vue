@@ -36,6 +36,7 @@
       v-model="data.email"
       v-validate="'email|required'")
       span.error {{ errors.first('Email') }}
+    checkboxItem()
 
     <!--b-form-group(-->
     <!--label="Телефон"-->
@@ -179,6 +180,7 @@ export default {
 </script>
 
 <style lang="scss">
+
   .commit-btn {
     margin-top: 15px;
     height: 40px;

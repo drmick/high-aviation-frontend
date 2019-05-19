@@ -3,7 +3,7 @@
     #top(ref="top")
       navbar(v-model="sidebarEnabled")
     //.container#main-container(:style="mainContainerStyle")
-    .container#main-container(:style="mainContainerStyle")
+    .container#main-container
       sidebar(:hiddenInMobile="!sidebarEnabled")
       #main-block
         #main-block-content
@@ -74,9 +74,16 @@ export default {
 </script>
 
 <style lang="scss">
+  input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, input.form-group:focus {
+    background-color: #fff !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  }
   //noinspection CssUnknownTarget
   @import '~/assets/css/constants.scss';
 
+  input[disabled] {
+    background-color: #cccccc24;
+  }
   #main {
     background-color: $background-color;
     color: white;
