@@ -81,9 +81,22 @@ export default {
   //noinspection CssUnknownTarget
   @import '~/assets/css/constants.scss';
 
-  input[disabled] {
-    background-color: #cccccc24;
+  input.form-control[disabled=disabled] {
+    border-color: #E7E7E7;
+    color: #CCCCCC;
+    background-color: white;
   }
+
+  input.form-control:focus {
+    border-color: $main-color-3;
+  }
+
+  .form-group.disabled {
+    label.d-block {
+      color: #CCCCCC !important;
+    }
+  }
+
   #main {
     background-color: $background-color;
     color: white;

@@ -11,7 +11,7 @@
           li.nav-item(:class="{ 'active': type===2 }", @click="setType(2)")  ЮРИДИЧЕСКОЕ ЛИЦО
       .wall.wall-2
         fiz-payer(:data="fizik", v-if="type===1")
-        ur-payer(:data="urik", v-if="type===2")
+        ur-payer(:data="urik", v-if="type===2", ref="urik")
       .wall.wall-3
         .wall-3__calc {{Number(price).toLocaleString('ru')}} &#8381;
         .wall-3__next-button
@@ -102,6 +102,7 @@ export default {
       this.type = type
     },
     next: function () {
+      this.$refs.urik.check()
       this.$validator.validateAll().then((result) => {
         if (result) {
           this.updateOrder()

@@ -5,15 +5,19 @@
       vue-bootstrap-typeahead(v-model="data.inn", :value="data.inn", :data="organizations", ref="typeahead", :serializer="s => s.displayName", @hit="selectedInn($event)", name="inn", id="search")
       span.error Обязательно для заполнения
 
-    b-form-group(label="БИК" label-for="bic")
-      b-form-input(
-      :class="{ 'is-invalid': errors.has('bic') }"
-      name="bic"
-      key="bic",
-      type="number"
-      v-model="data.bic"
-      v-validate="'required|numeric'")
-      span.error {{ errors.first('bic') }}
+    div.search-block(:class="{ 'bad': emptySearch2 === true }")
+      label БИК
+      vue-bootstrap-typeahead(v-model="data.bic", :value="data.bic", :data="banks", ref="typeahead2", :serializer="s => s.displayName", @hit="selectedBic($event)", name="bic", id="search2")
+      span.error Обязательно для заполнения
+    <!--b-form-group(label="БИК" label-for="bic")-->
+      <!--b-form-input(-->
+      <!--:class="{ 'is-invalid': errors.has('bic') }"-->
+      <!--name="bic"-->
+      <!--key="bic",-->
+      <!--type="number"-->
+      <!--v-model="data.bic"-->
+      <!--v-validate="'required|numeric'")-->
+      <!--span.error {{ errors.first('bic') }}-->
 
     b-form-group(label="Рассчетный счет" label-for="account")
       b-form-input(
@@ -25,13 +29,12 @@
       v-validate="'required|numeric'")
       span.error {{ errors.first('account') }}
 
-    b-form-group(label="Название" label-for="urName")
+    b-form-group(label="Название организации" label-for="urName")
       b-form-input(
       :class="{ 'is-invalid': errors.has('urName') }"
       name="urName"
       key="urName",
       type="text",
-      disabled=true
       v-model="data.urName"
       v-validate="'required'")
       span.error {{ errors.first('urName') }}
@@ -41,7 +44,6 @@
       :class="{ 'is-invalid': errors.has('kpp') }"
       name="kpp"
       key="kpp",
-      disabled=true
       type="number"
       v-model="data.kpp"
       v-validate="'required|numeric'")
@@ -116,7 +118,9 @@ export default {
       order: {},
       loading: false,
       organizations: [],
-      emptySearch: false
+      banks: [],
+      emptySearch: false,
+      emptySearch2: false
     }
   },
   inject: ['$validator'],
@@ -127,9 +131,21 @@ export default {
       this.$set(this.data, 'urName', data.name)
       this.$set(this.data, 'inn', data.inn)
       this.$set(this.data, 'kpp', data.kpp)
+      return false
+    },
+    selectedBic: function (data) {
+      this.$set(this.data, 'bic', data.bic)
+      this.$set(this.data, 'corrAccount', data.corr)
     },
     checkInn: function () {
-      this.emptySearch = this.data.inn.length === 0
+      this.emptySearch = (this.data.inn || []).length === 0
+    },
+    checkBic: function () {
+      this.emptySearch2 = (this.data.bic || []).length === 0
+    },
+    check: function () {
+      this.checkBic()
+      this.checkInn()
     }
   },
 
@@ -157,6 +173,31 @@ export default {
         .catch(function (error) {
           console.error(error)
           that.organizations = []
+        }).finally(() => {
+          this.loading = false
+        })
+    },
+    'data.bic': function (newVal) {
+      this.checkBic()
+      newVal = newVal.split(' ').join('')
+      if (newVal.length <= 1) {
+        this.notFound = true
+        return
+      }
+      this.$refs.typeahead2.inputValue = newVal
+      let that = this
+      let uri = 'get_bank_info/' + newVal
+      this.$axios.get(uri, {}, {
+        before: this.loading = true
+      })
+        .then(function (response) {
+          let it = response.data
+          that.banks = [{ displayName: it.bik + ' - ' + it.name, name: it.name, bic: it.bik, corr: it.ks }]
+          // that.notFound = !that.organizations.includes(newVal)
+        })
+        .catch(function (error) {
+          console.error(error)
+          that.banks = []
         }).finally(() => {
           this.loading = false
         })
