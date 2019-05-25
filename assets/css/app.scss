@@ -8,9 +8,17 @@ html, body {
   min-height: 100%;
 
   a:visited, a:hover {
-    color: #28a745;
+    text-decoration: none;
+    background-color: transparent !important;
     //background-color: transparent !important;
   }
+
+  a.vbst-item:visited, a.vbst-item:hover {
+    text-decoration: none;
+    background-color: $main-color-3 !important;
+    border: 1px solid $main-color-3;
+  }
+
 
   .container {
     max-width: 768px;
