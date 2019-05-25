@@ -43,7 +43,18 @@ module.exports = {
   loading: '~/components/loading.vue',
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    [
+      '@nuxtjs/yandex-metrika',
+      {
+        id: '53794195',
+        webvisor: true,
+        // clickmap:true,
+        // useCDN:false,
+        // trackLinks:true,
+        // accurateTrackBounce:true,
+      }
+    ],
   ],
   auth: {
     strategies: {
