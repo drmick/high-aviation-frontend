@@ -102,7 +102,9 @@ export default {
       this.type = type
     },
     next: function () {
-      this.$refs.urik.check()
+      if (this.type === 2) {
+        this.$refs.urik.check()
+      }
       this.$validator.validateAll().then((result) => {
         if (result) {
           this.updateOrder()

@@ -202,7 +202,7 @@ export default {
       font-family: Montserrat, sans-serif;
       display: flex;
       justify-content: space-between;
-      padding: 50px 20px 20px;
+      padding: 10px 10px;
       &__icon {
         padding-top: 28px;
       }

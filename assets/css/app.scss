@@ -12,10 +12,10 @@ html, body {
     //background-color: transparent !important;
   }
 
-  .page {
+  .container {
     max-width: 768px;
+    padding: 0;
   }
-
 
   a::-moz-focus-inner, select::-moz-focus-inner {
     border: 0;
@@ -43,4 +43,7 @@ html, body {
 
 .vbt-autcomplete-list {
   padding-top: 0 !important;
+  .list-group-item {
+    border-radius: 0;
+  }
 }

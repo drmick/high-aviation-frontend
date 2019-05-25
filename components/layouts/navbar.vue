@@ -70,15 +70,12 @@ export default {
       min-height: 0;
     }
 
-    height: 70px;
     z-index: 100;
     background-color: $main-color-1;
     width: 100%;
     padding: 8px 10px;
 
-    @media (max-width: $displaySizeSmall) {
-      height: 60px;
-    }
+    height: 60px;
 
     &__logo {
       flex-grow: 1;

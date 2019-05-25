@@ -99,7 +99,7 @@ export default {
   .page {
     overflow-x: hidden;
     min-height: 660px;
-    position: absolute;
+    position: relative;
     height: 100vh;
     width: 100%;
     left: 0;
@@ -206,7 +206,7 @@ export default {
     }
 
     &__search__error {
-      border: 1px solid $main-color-4;
+      // border: 1px solid $main-color-4;
       input[type=search] {
         border: 1px solid $main-color-4 !important;
       }

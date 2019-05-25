@@ -2,7 +2,7 @@
   aside(:class="{ 'hidden-in-mobile': hiddenInMobile }")
     .list-group(itemscope="", itemtype="http://www.schema.org/SiteNavigationElement")
       sidebar-item(url="/", label="Главная")
-      sidebar-item(url="/about", label="О клубе")
+      sidebar-item(url="/rules", label="О клубе")
       sidebar-item(url="/history", label="История бронирования", v-if="loggedIn")
 </template>
 

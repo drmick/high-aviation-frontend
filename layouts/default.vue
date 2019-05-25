@@ -2,14 +2,11 @@
   div#main
     #top(ref="top")
       navbar(v-model="sidebarEnabled")
-    //.container#main-container(:style="mainContainerStyle")
     .container#main-container
       sidebar(:hiddenInMobile="!sidebarEnabled")
       #main-block
         #main-block-content
-          //breadcrumbs
           nuxt
-    //the-bet-modal
     no-ssr
       notifications(group="simple-notification", position="bottom right")
 </template>
@@ -50,15 +47,9 @@ export default {
   updated () {
     this.handleResize()
   },
-  // computed: {
-  //   mainContainerStyle: function () {
-  //     return { 'padding-top': 0 + this.headerHeight + 'px !important' }
-  //   }
-  // },
   components: {
     Sidebar,
     'navbar': Navbar
-    // 'sidebar': Sidebar
   },
   methods: {
     handleResize: function () {
@@ -111,17 +102,15 @@ export default {
   }
 
   #main-container {
-    padding-top: 50px;
+    overflow-x: hidden;
     position: relative;
-    @media (max-width: $displaySizeSmall) {
-      padding: 60px 10px 0;
-    }
+    padding: 60px 10px 0;
   }
 
   #main-block {
     display: block;
     padding-left: 260px;
-    padding-right: 260px;
+    padding-right: 0;
     overflow: auto;
     @media (max-width: $displaySizeSmall) {
       padding-left: 0;
