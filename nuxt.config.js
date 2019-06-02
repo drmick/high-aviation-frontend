@@ -9,7 +9,7 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
       { name: 'msapplication-TileColor', content: '#2b5797' },
       { name: 'theme-color', content: '#ffffff' },
-      { name: 'google-site-verification', content: 'WKSST5zHlhmOtPJuNAGSIhiPTkbQFXexcDAR5t_Oj2M' }
+      { name: 'google-site-verification', content: 'PDtlKn5wjasQsDQ_kzU9BPKrA-X44ncboZwWzqq66Gc' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -27,12 +27,7 @@ module.exports = {
     'plugins/i18n',
     'plugins/vee-validate',
     { src: '~/plugins/autocomplete', ssr: false },
-    // 'plugins/moment',
     { src: 'plugins/notifications', ssr: false },
-    // {
-    //   src: 'plugins/clipboard',
-    //   ssr: false
-    // }
   ],
   env: {
     baseUrl: 'https://highaviation.ru'
