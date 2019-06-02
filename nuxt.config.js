@@ -7,18 +7,17 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-      { name: 'msapplication-TileColor', content: '#2b5797' },
+      { name: 'msapplication-TileColor', content: '#000000' },
       { name: 'theme-color', content: '#ffffff' },
-      { name: 'google-site-verification', content: 'PDtlKn5wjasQsDQ_kzU9BPKrA-X44ncboZwWzqq66Gc' }
+      { name: 'google-site-verification', content: 'PDtlKn5wjasQsDQ_kzU9BPKrA-X44ncboZwWzqq66Gc' },
+      { titleTemplate: 'High Aviation Club' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      // { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png?v=ng90LREre9' },
-      // { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png?v=ng90LREre9' },
-      // { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png?v=ng90LREre9' },
-      // { rel: 'manifest', href: '/site.webmanifest?v=ng90LREre9' },
-      // { rel: 'mask-icon', href: '/safari-pinned-tab.svg?v=ng90LREre9', color: '#5bbad5' },
-      // { rel: 'shortcut icon', href: '/favicon.ico?v=ng90LREre9' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      { rel: 'apple-touch-icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+      { rel: 'apple-touch-icon', type: 'image/png', sizes: '36x36', href: '/favicon-36x16.png' },
+      { rel: 'manifest', href: '/site.webmanifest' },
+      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#fbbc0b' }
     ]
   },
   plugins: [
@@ -27,7 +26,7 @@ module.exports = {
     'plugins/i18n',
     'plugins/vee-validate',
     { src: '~/plugins/autocomplete', ssr: false },
-    { src: 'plugins/notifications', ssr: false },
+    { src: 'plugins/notifications', ssr: false }
   ],
   env: {
     baseUrl: 'https://highaviation.ru'
@@ -43,13 +42,13 @@ module.exports = {
       '@nuxtjs/yandex-metrika',
       {
         id: '53794195',
-        webvisor: true,
+        webvisor: true
         // clickmap:true,
         // useCDN:false,
         // trackLinks:true,
         // accurateTrackBounce:true,
       }
-    ],
+    ]
   ],
   auth: {
     strategies: {

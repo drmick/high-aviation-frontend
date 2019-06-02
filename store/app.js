@@ -13,7 +13,7 @@ export default {
   state: {
     funds: ['btc', 'btc_test'],
     locale: null,
-    locales: ['en', 'ru']
+    locales: ['ru']
   },
   mutations: {
     SET_LOCALE (state, value) {
