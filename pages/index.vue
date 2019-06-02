@@ -5,12 +5,12 @@
     .page__title
       | VIP терминал аэропорта
       strong «Домодедово»
-    .page__search(:class="{'page__search__error': notFound}")
+    .page__search(:class="{'page__search__error': notFound}", ref="inputSearch")
       vue-bootstrap-typeahead(v-model="searchString", :data="flightList", placeholder="№ рейса", ref="typeahead")
       .page__search__errortext
         | рейс не найден
     .page__button
-      button-item(:to="'/search/?flight=' + searchString", :disabled="notFound || searchString.length === 0") поиск
+      button-item(:to="'/search/?flight=' + searchString", :disabled="notFound || searchString.length === 0", @click.native="btnSearchClick") поиск
     .page__help
       .page__help__arrow
       .page__help__text
@@ -20,8 +20,8 @@
         br
         | чтобы начать бронирование
     .page__service-info
-       .t1 Стоимость услуги 390$
-       .t2 Расчет стоимости по курсу ЦБ на день оплаты
+      .t1 Стоимость услуги 390$
+      .t2 Расчет стоимости по курсу ЦБ на день оплаты
     .page__help-button
       button-item(@click="visibleHelpBtn")
         img(src="/images/question-icon.svg")
@@ -57,6 +57,20 @@ export default {
     ButtonItem
   },
   methods: {
+    btnSearchClick: function () {
+      if (this.searchString.length <= 1 || this.notFound) {
+        let input = this.$refs.inputSearch
+        let count = 0
+        console.log(count)
+        let interval = setInterval(function () {
+          input.classList.toggle('page__search__error')
+          count++
+          if (count >= 6) {
+            clearInterval(interval)
+          }
+        }, 100)
+      }
+    },
     visibleHelpBtn: function () {
       this.helpVisible = true
     }
@@ -96,6 +110,7 @@ export default {
 </script>
 <style lang="scss">
   @import "~/assets/css/constants.scss";
+
   .page {
     overflow-x: hidden;
     min-height: 660px;

@@ -31,10 +31,9 @@ export default {
         { name: 'og:locale', content: this.$i18n.locale },
         { name: 'og:type', content: 'article' },
         { name: 'og:description', content: this.$t('description') },
-        { name: 'og:site_name', content: this.$t('siteName') }
-        // { name: 'og:url', content: process.env.baseUrl + this.$route.fullPath },
-        // { name: 'og:image', content: process.env.baseUrl + '/logo_180.png' }
-      ]
+        { name: 'og:site_name', content: this.$t('siteName') },
+        { name: 'og:url', content: process.env.baseUrl + this.$route.fullPath },
+        { name: 'og:image', content: process.env.baseUrl + '/images/537.png' } ]
     }
   },
   components: {
