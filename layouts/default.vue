@@ -32,6 +32,7 @@ export default {
         { property: 'og:site_name', content: this.$t('siteName') },
         { property: 'og:url', content: process.env.baseUrl + this.$route.fullPath },
         { property: 'og:image', content: process.env.baseUrl + '/images/240.png' }
+      ]
     }
   },
   data () {
